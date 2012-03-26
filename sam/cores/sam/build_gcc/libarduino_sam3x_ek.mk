@@ -1,8 +1,8 @@
 # Makefile for compiling libArduino
 .SUFFIXES: .o .a .c .s
 
-CHIP=__SAM3S4C__
-VARIANT=sam3s_ek
+CHIP=__SAM3X8H__
+VARIANT=sam3x_ek
 LIBNAME=libarduino_$(VARIANT)
 TOOLCHAIN=gcc
 
@@ -110,7 +110,7 @@ $(VARIANT): create_output $(OUTPUT_LIB)
 
 .PHONY: create_output
 create_output:
-	@echo --- Preparing $(VARIANT) files in $(OUTPUT_PATH) $(OUTPUT_BIN)
+	@echo --- Preparing $(VARIANT) files in $(OUTPUT_PATH) $(OUTPUT_BIN) 
 	@echo -------------------------
 	@echo *$(INCLUDES)
 	@echo -------------------------
