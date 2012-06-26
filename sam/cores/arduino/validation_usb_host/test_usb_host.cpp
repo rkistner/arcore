@@ -1,61 +1,54 @@
 #include "variant.h"
 #include <stdio.h>
-#include <hidboot.h>
+#include <adk.h>
 
-class MouseRptParser : public MouseReportParser
-{
-protected:
-	virtual void OnMouseMove		(MOUSEINFO *mi);
-	virtual void OnLeftButtonUp		(MOUSEINFO *mi);
-	virtual void OnLeftButtonDown	(MOUSEINFO *mi);
-	virtual void OnRightButtonUp	(MOUSEINFO *mi);
-	virtual void OnRightButtonDown	(MOUSEINFO *mi);
-	virtual void OnMiddleButtonUp	(MOUSEINFO *mi);
-	virtual void OnMiddleButtonDown	(MOUSEINFO *mi);
-};
-void MouseRptParser::OnMouseMove(MOUSEINFO *mi)
-{
-    printf("Pos={%d,%d}\r\n", mi->dX, mi->dY);
-};
-void MouseRptParser::OnLeftButtonUp (MOUSEINFO *mi)
-{
-    printf("L Butt Up\r\n");
-};
-void MouseRptParser::OnLeftButtonDown (MOUSEINFO *mi)
-{
-    printf("L Butt Dn\r\n");
-};
-void MouseRptParser::OnRightButtonUp (MOUSEINFO *mi)
-{
-    printf("R Butt Up\r\n");
-};
-void MouseRptParser::OnRightButtonDown (MOUSEINFO *mi)
-{
-    printf("R Butt Dn\r\n");
-};
-void MouseRptParser::OnMiddleButtonUp (MOUSEINFO *mi)
-{
-    printf("M Butt Up\r\n");
-};
-void MouseRptParser::OnMiddleButtonDown (MOUSEINFO *mi)
-{
-    printf("M Butt Dn\r\n");
-};
+// Accessory descriptor. It's how Arduino identifies itself to Android.
+char applicationName[] = "Arduino_Terminal"; // the app on your phone
+char accessoryName[] = "Arduino Due X"; // your Arduino board
+char companyName[] = "Arduino SA";
+
+// Make up anything you want for these
+char versionNumber[] = "1.0";
+char serialNumber[] = "1";
+char url[] = "http://labs.arduino.cc/uploads/ADK/ArduinoTerminal/ThibaultTerminal_ICS_0001.apk";
 
 USBHost Usb;
-HIDBoot<HID_PROTOCOL_MOUSE> HostMouse(&Usb);
-MouseRptParser Prs;
+ADK adk(&Usb, companyName, applicationName, accessoryName,versionNumber,url,serialNumber);
 
 void setup()
 {
 	cpu_irq_enable();
-	printf("\r\nProgram started:\r\n");
+	printf("\r\nADK demo start\r\n");
 	delay(200);
-
-    HostMouse.SetReportParser(0,(HIDReportParser*)&Prs);
 }
+
+#define RCVSIZE 128
 
 void loop()
 {
+	uint8_t buf[RCVSIZE];
+	uint32_t nbread = 0;
+	char helloworld[] = "Hello World!\r\n";
+
 	Usb.Task();
+
+	if (adk.isReady())
+	{
+		/* Write hello string to ADK */
+		adk.write(strlen(helloworld), (uint8_t *)helloworld);
+
+		delay(1000);
+
+		/* Read data from ADK and print to UART */
+		adk.read(&nbread, RCVSIZE, buf);
+		if (nbread > 0)
+		{
+			printf("RCV: ");
+			for (uint32_t i = 0; i < nbread; ++i)
+			{
+				printf("%c", (char)buf[i]);
+			}
+			printf("\r\n");
+		}
+	}
 }
