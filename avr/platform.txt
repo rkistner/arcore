@@ -2,7 +2,8 @@
 # AVR compile variables
 # --------------------- 
 
-name=Arduino AVR Boards
+name=Arduino AVR Boards (arcore)
+
 # Default "compiler.path" is correct, change only if you want to overidde the initial value
 #compiler.path={ide.path}/tools/avr/bin/..
 compiler.c.cmd=avr-gcc

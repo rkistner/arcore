@@ -2,7 +2,7 @@
 # SAM3 compile variables
 # --------------------- 
 
-name=Arduino ARM (32-bits) Boards
+name=Arduino ARM (32-bits) Boards (arcore)
 compiler.path={runtime.ide.path}/hardware/tools/g++_arm_none_eabi/bin/
 compiler.c.cmd=arm-none-eabi-gcc
 compiler.c.flags=-c -g -Os -w -ffunction-sections -fdata-sections -nostdlib --param max-inline-insns-single=500 -Dprintf=iprintf
