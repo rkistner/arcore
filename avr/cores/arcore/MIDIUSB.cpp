@@ -2,6 +2,7 @@
 #include "Platform.h"
 #include "USBAPI.h"
 #include "USBDesc.h"
+#include "MIDIUSB.h"
 
 #if defined(USBCON)
 #ifdef MIDI_ENABLED
@@ -70,6 +71,90 @@ bool WEAK MIDI_Setup(Setup& setup)
     
     return false;
 }
+
+const MIDIEvent MIDI_EVENT_NONE = {0, 0, 0, 0};
+
+
+void MIDIUSB_::accept(void) 
+{
+    midi_buffer *buffer = &(this->_rx_buffer);
+    int i = (unsigned int)(buffer->head+1) % MIDI_BUFFER_SIZE;
+    
+    // if we should be storing the received character into the location
+    // just before the tail (meaning that the head would advance to the
+    // current location of the tail), we're about to overflow the buffer
+    // and so we don't write the character or advance the head.
+
+    // while we have room to store a byte
+    while (i != buffer->tail) {
+        int c = USB_Recv(CDC_RX);
+        if (c == -1)
+            break;  // no more data
+        buffer->buffer[buffer->head] = c;
+        buffer->head = i;
+
+        i = (unsigned int)(buffer->head+1) % MIDI_BUFFER_SIZE;
+    }
+}
+
+int MIDIUSB_::available(void)
+{
+    midi_buffer *buffer = &(this->_rx_buffer);
+    return ((unsigned int)(MIDI_BUFFER_SIZE + buffer->head - buffer->tail) % MIDI_BUFFER_SIZE) / 4;
+}
+
+MIDIEvent MIDIUSB_::peek(void)
+{
+    if(this->available() < 4) {
+        return MIDI_EVENT_NONE;
+    } else {
+        midi_buffer *buffer = &(this->_rx_buffer);
+        MIDIEvent result;
+        result.type = buffer->buffer[buffer->tail];
+        result.m1 = buffer->buffer[(buffer->tail+1) % MIDI_BUFFER_SIZE];
+        result.m2 = buffer->buffer[(buffer->tail+2) % MIDI_BUFFER_SIZE];
+        result.m3 = buffer->buffer[(buffer->tail+3) % MIDI_BUFFER_SIZE];
+        return result;
+    }
+}
+
+MIDIEvent MIDIUSB_::read(void)
+{
+    MIDIEvent event = this->peek();
+    midi_buffer *buffer = &(this->_rx_buffer);
+    buffer->tail = (unsigned int)(buffer->tail + 4) % MIDI_BUFFER_SIZE;
+    return event;
+}
+
+void MIDIUSB_::flush(void)
+{
+    USB_Flush(MIDI_TX);
+}
+
+size_t MIDIUSB_::write(MIDIEvent c)
+{
+    // TODO: only try to send bytes if the connection is open
+    
+    int r = USB_Send(MIDI_TX,&c,4);
+    if (r > 0) {
+        return r;
+    } else {
+        return 0;
+    }
+}
+
+// This operator is a convenient way for a sketch to check whether the
+// port has actually been configured and opened by the host (as opposed
+// to just being connected to the host).  It can be used, for example, in 
+// setup() before printing to ensure that an application on the host is
+// actually ready to receive and display the data.
+// This is not actually implemented yet (always returns true).
+MIDIUSB_::operator bool() {
+    return true;
+}
+
+MIDIUSB_ MIDIUSB;
+
 
 #endif
 #endif

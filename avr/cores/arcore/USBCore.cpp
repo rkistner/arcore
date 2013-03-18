@@ -630,7 +630,7 @@ ISR(USB_GEN_vect)
 			Serial.accept();
 #endif
 #ifdef MIDI_ENABLED
-		// TODO: implement midi receive here
+		MIDIUSB.accept();
 #endif
 		// check whether the one-shot period has elapsed.  if so, turn off the LED
 		if (TxLEDPulse && !(--TxLEDPulse))
