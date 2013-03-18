@@ -277,6 +277,89 @@ typedef struct
 	EndpointDescriptor			in;
 } HIDDescriptor;
 
+typedef struct
+{
+	u8 len;		// 9
+	u8 dtype;	// 0x24
+	u8 subtype;	// 0x01
+	u16 revision;	// 0x0100
+	u16 totalLen;	// 0x0009
+	u8 nsi;		// 0x01
+	u8 inr;		// 0x01
+} ACInterfaceDescriptor;
+
+typedef struct 
+{
+	InterfaceDescriptor			ac;
+	ACInterfaceDescriptor			desc;
+} ACDescriptor;
+
+typedef struct
+{
+    u8 len; // 5
+    u8 dtype;  // 0x25
+    u8 subtype; //0x01
+    u8 n;   //0x01;
+    u8 jackId;  //0x01;
+} MIDIEndpointDescriptor;
+
+typedef struct
+{
+    EndpointDescriptor midi;
+    MIDIEndpointDescriptor desc;
+} MIDIEndpoint;
+
+// 0 1 0x05 Size of this descriptor, in bytes.
+// 1 bDescriptorType 1 0x25 CS_ENDPOINT descriptor
+// 2 bDescriptorSubtype 1 0x01 MS_GENERAL subtype.
+// 3 bNumEmbMIDIJack 1 0x01 Number of embedded MIDI IN Jacks.
+// 4 BaAssocJackID(1) 1 0x01 ID of the Embedded MIDI IN Jack.
+
+typedef struct
+{
+	u8 len;		// 7
+	u8 dtype;	// 0x24
+	u8 subtype;	// 0x01
+	u16 revision;	// 0x0100
+	u16 totalLen;	// 0x0000
+} MIDIInterfaceDescriptor;
+
+typedef struct 
+{
+	u8 len;		// 6
+	u8 dtype;	// 0x24
+	u8 subtype;	// MIDI_IN_JACK
+	u8 jackType;
+	u8 index;
+	u8 unused;
+} MIDIJackIn;
+
+typedef struct 
+{
+    u8 len;     // 9
+    u8 dtype;   // 0x24
+    u8 subtype; // MIDI_OUT_JACK
+    u8 jackType;
+    u8 index;
+    u8 nrPins;
+    u8 sourceId;
+    u8 sourcePin;
+    u8 unused;
+} MIDIJackOut;
+
+typedef struct 
+{
+	InterfaceDescriptor			midi;
+	MIDIInterfaceDescriptor			desc;
+	MIDIJackIn			jack1;
+	MIDIJackOut			jack2;
+    MIDIJackIn         jack3;
+    MIDIJackOut         jack4;
+    MIDIEndpoint endpoint1;
+    MIDIEndpoint endpoint2;
+} MIDIDescriptor;
+
+
 
 #define D_DEVICE(_class,_subClass,_proto,_packetSize0,_vid,_pid,_version,_im,_ip,_is,_configs) \
 	{ 18, 1, 0x200, _class,_subClass,_proto,_packetSize0,_vid,_pid,_version,_im,_ip,_is,_configs }
