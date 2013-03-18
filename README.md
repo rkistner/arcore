@@ -30,6 +30,7 @@ A simple example that echoes MIDI messages back to the PC:
             MIDIEvent e;
             e = MIDIUSB.read();
             MIDIUSB.write(e);
+            MIDIUSB.flush();
             // Example messages:
             // Note on, channel 0, middle C (48), normal velocity (64):
             // e = {0x09, 0x90, 48, 64}
