@@ -5,7 +5,7 @@ env:
   - ARDUINO_PACKAGE=arduino-1.5.2-linux64
   - ARDUINO_PACKAGE=arduino-nightly-linux64
 matrix:
-  - allow_failures:
+  allow_failures:
     - env: ARDUINO_PACKAGE=arduino-nightly-linux64
 before_install:
   - wget http://downloads.arduino.cc/$ARDUINO_PACKAGE.tgz
