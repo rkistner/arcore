@@ -8,13 +8,14 @@ if [[ ! -d "$ARDUINO_PATH" && -f "/usr/bin/arduino" ]]; then
 fi
 
 function example {
-  if [[ -d "$ARDUINO_PATH" ]]; then
+  if [[ -f "$ARDUINO_PATH/arduino" ]]; then
     echo "Using $ARDUINO_PATH/arduino"
     cd $ARDUINO_PATH
     xvfb-run ./arduino --board arcore:avr:leonardo --verify "$EXAMPLES/$1/$1.ino"
     sleep 1
   else
-    echo "Set $ARDUINO_PATH to the folder containing the arduino binary"
+    echo "Set ARDUINO_PATH to the folder containing the arduino binary"
+    exit 1
   fi
 }
 

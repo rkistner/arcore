@@ -10,6 +10,7 @@ matrix:
 before_install:
   - wget --referer=http://arduino.cc/en/main/software http://downloads.arduino.cc/$ARDUINO_PACKAGE.tgz
   - tar xzf $ARDUINO_PACKAGE.tgz
+  - mv arduino-* $ARDUINO_PACKAGE
   - export ARDUINO_PATH=$PWD/$ARDUINO_PACKAGE
 script:
   - ./install.sh
