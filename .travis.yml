@@ -1,0 +1,19 @@
+language: java
+jdk:
+  - oraclejdk7
+env:
+  - ARDUINO_PACKAGE=arduino-1.5.2-linux64.tgz
+  - ARDUINO_PACKAGE=arduino-nightly-linux64.tgz
+matrix:
+  - allow_failures:
+    - env: ARDUINO_PACKAGE=arduino-nightly-linux64.tgz
+before_install:
+  #- wget http://downloads.arduino.cc/arduino-nightly-linux64.tgz
+  - wget http://downloads.arduino.cc/$ARDUINO_PACKAGE
+  - tar xzf $ARDUINO_PACKAGE
+  - export ARDUINO_PATH=$PWD/$ARDUINO_PACKAGE
+script:
+  - ./verify.sh
+
+
+
