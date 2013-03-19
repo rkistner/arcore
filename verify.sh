@@ -12,10 +12,12 @@ function example {
     echo "Using $ARDUINO_PATH/arduino"
     cd $ARDUINO_PATH
     xvfb-run ./arduino --board arcore:avr:leonardo --verify "$EXAMPLES/$1/$1.ino"
+    sleep 1
   else
     echo "Set $ARDUINO_PATH to the folder containing the arduino binary"
   fi
 }
 
-example "empty"
+example "Empty"
+example "MidiEcho"
 
