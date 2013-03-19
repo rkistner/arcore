@@ -8,7 +8,7 @@ matrix:
   allow_failures:
     - env: ARDUINO_PACKAGE=arduino-nightly-linux64
 before_install:
-  - wget http://downloads.arduino.cc/$ARDUINO_PACKAGE.tgz
+  - wget --referer=http://arduino.cc/en/main/software http://downloads.arduino.cc/$ARDUINO_PACKAGE.tgz
   - tar xzf $ARDUINO_PACKAGE.tgz
   - export ARDUINO_PATH=$PWD/$ARDUINO_PACKAGE
 script:
