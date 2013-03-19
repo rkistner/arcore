@@ -12,6 +12,7 @@ before_install:
   - tar xzf $ARDUINO_PACKAGE.tgz
   - export ARDUINO_PATH=$PWD/$ARDUINO_PACKAGE
 script:
+  - ./install.sh
   - ./verify.sh
 
 
