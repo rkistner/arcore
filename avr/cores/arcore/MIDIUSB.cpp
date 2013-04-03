@@ -87,7 +87,7 @@ void MIDIUSB_::accept(void)
 
     // while we have room to store a byte
     while (i != buffer->tail) {
-        int c = USB_Recv(CDC_RX);
+        int c = USB_Recv(MIDI_RX);
         if (c == -1)
             break;  // no more data
         buffer->buffer[buffer->head] = c;
