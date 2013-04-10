@@ -105,7 +105,7 @@ int MIDIUSB_::available(void)
 
 MIDIEvent MIDIUSB_::peek(void)
 {
-    if(this->available() < 4) {
+    if(this->available() < 1) {
         return MIDI_EVENT_NONE;
     } else {
         midi_buffer *buffer = &(this->_rx_buffer);
