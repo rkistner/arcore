@@ -32,3 +32,30 @@ leonardo.build.extra_flags=-DUSB_VID={build.vid} -DUSB_PID={build.pid}
 
 ##############################################################
 
+leonardo2.name=Arduino Leonardo (arcore, iPad compatible)
+leonardo2.upload.tool=avrdude
+leonardo2.upload.protocol=avr109
+leonardo2.upload.maximum_size=28672
+leonardo2.upload.speed=57600
+leonardo2.upload.disable_flushing=true
+leonardo2.upload.use_1200bps_touch=true
+leonardo2.upload.wait_for_upload_port=true
+
+leonardo2.bootloader.tool=avrdude
+leonardo2.bootloader.low_fuses=0xff
+leonardo2.bootloader.high_fuses=0xd8
+leonardo2.bootloader.extended_fuses=0xcb
+leonardo2.bootloader.file=caterina/Caterina-Leonardo.hex
+leonardo2.bootloader.unlock_bits=0x3F
+leonardo2.bootloader.lock_bits=0x2F
+
+leonardo2.build.mcu=atmega32u4
+leonardo2.build.f_cpu=16000000L
+leonardo2.build.vid=0x2341
+leonardo2.build.pid=0x8036
+leonardo2.build.board=AVR_LEONARDO
+leonardo2.build.core=arcore
+leonardo2.build.variant=arduino:leonardo
+leonardo2.build.extra_flags=-DUSB_VID={build.vid} -DUSB_PID={build.pid} -DIPAD_COMPAT
+
+##############################################################
