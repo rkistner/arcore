@@ -9,9 +9,11 @@ fi
 
 function example {
   if [[ -f "$ARDUINO_PATH/arduino" ]]; then
-    echo "Using $ARDUINO_PATH/arduino"
     cd $ARDUINO_PATH
-    xvfb-run ./arduino --board arcore:avr:leonardo --verify "$EXAMPLES/$1/$1.ino"
+    echo
+    echo "### Verifying example $1 on board $2"
+    echo "Using $ARDUINO_PATH/arduino"
+    xvfb-run ./arduino --board "$2" --verify "$EXAMPLES/$1/$1.ino"
     sleep 1
   else
     echo "Set ARDUINO_PATH to the folder containing the arduino binary"
@@ -19,6 +21,9 @@ function example {
   fi
 }
 
-example "Empty"
-example "MidiEcho"
+for board in "arcore:avr:leonardo" "arcore:avr:leonardo2" "arcore:avr:micro"
+do
+  example "Empty" $board
+  example "MidiEcho" $board
+done
 
