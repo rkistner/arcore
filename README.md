@@ -10,12 +10,12 @@ serve as a good base for other modifications to the cores libraries. Let me know
 
 ## Installation and Usage
 
-Version 1.5.x of the Arduino IDE is required to build projects with this library.
+Version 1.5.4 (or greater) of the Arduino IDE is required to build projects with this library.
 
 1. Clone this repository.
 2. On Linux, run `./install.sh`. The script creates a symlink in ~/Arduino/hardware to the repository. On Windows or Mac you have
    to do this manually (you may move the repository there instead of creating a symlink).
-3. Launch the Arduino IDE (only tested on 1.5.2, will not work pre-1.5.x).
+3. Launch the Arduino IDE (only tested on 1.5.4, will not work pre-1.5.x).
 4. Under Tools -> Board, select Arduino Leonardo (arcore).
 5. Upload your sketch as usual.
 
