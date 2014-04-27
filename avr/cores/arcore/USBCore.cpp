@@ -271,6 +271,11 @@ u8 USB_SendSpace(u8 ep)
 	return 64 - FifoByteCount();
 }
 
+u8 USB_Ready(u8 ep) {
+	LockEP lock(ep);
+	return ReadWriteAllowed();
+}
+
 //	Blocking Send of data to an endpoint
 int USB_Send(u8 ep, const void* d, int len)
 {

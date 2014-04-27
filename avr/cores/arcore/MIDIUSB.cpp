@@ -150,10 +150,13 @@ void MIDIUSB_::flush(void)
 size_t MIDIUSB_::write(MIDIEvent c)
 {
     // TODO: only try to send bytes if the connection is open
-    
-    int r = USB_Send(MIDI_TX,&c,4);
-    if (r > 0) {
-        return r;
+    if(USB_Ready(MIDI_TX)) {
+        int r = USB_Send(MIDI_TX,&c,4);
+        if (r > 0) {
+            return r;
+        } else {
+            return 0;
+        }
     } else {
         return 0;
     }
@@ -164,9 +167,8 @@ size_t MIDIUSB_::write(MIDIEvent c)
 // to just being connected to the host).  It can be used, for example, in 
 // setup() before printing to ensure that an application on the host is
 // actually ready to receive and display the data.
-// This is not actually implemented yet (always returns true).
 MIDIUSB_::operator bool() {
-    return true;
+    return USB_Ready(MIDI_TX);
 }
 
 MIDIUSB_ MIDIUSB;
