@@ -3,6 +3,7 @@
 #include "USBAPI.h"
 #include "USBDesc.h"
 #include "MIDIUSB.h"
+#include <avr/wdt.h>
 
 #if defined(USBCON)
 #ifdef MIDI_ENABLED
@@ -24,6 +25,15 @@
 #define JACK2 0x02
 #define JACK3 0x03
 #define JACK4 0x04
+
+
+
+void watchdogReset() {
+    // Reset after 120ms
+    *(uint16_t *)0x0800 = 0x7777;
+    wdt_enable(WDTO_120MS);
+}
+
 
 extern const ACDescriptor _acInterface PROGMEM;
 const ACDescriptor _acInterface =
@@ -114,6 +124,12 @@ MIDIEvent MIDIUSB_::peek(void)
         result.m1 = buffer->buffer[(buffer->tail+1) % MIDI_BUFFER_SIZE];
         result.m2 = buffer->buffer[(buffer->tail+2) % MIDI_BUFFER_SIZE];
         result.m3 = buffer->buffer[(buffer->tail+3) % MIDI_BUFFER_SIZE];
+
+        // This should perhaps be in accept(), but the check is must simpler / faster here.
+        // It does require the user sketch to read MIDI events though.
+        if(result.type == 0x07 && result.m1 == 0xF0 && result.m3 == 0xF7 && result.m2 == 0x01) {
+            watchdogReset();
+        }
         return result;
     }
 }
