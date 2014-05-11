@@ -32,51 +32,61 @@ For more info on the MIDI-USB event format, see the official [USB-MIDI specifica
 
 ### Send a note-on and note-off every two seconds
 
-   
-    // First parameter is the event type (0x09 = note on, 0x08 = note off).
-    // Second parameter is note-on/note-off, combined with the channel.
-    // Channel can be anything between 0-15. Typically reported to the user as 1-16.
-    // Third parameter is the note number (48 = middle C).
-    // Fourth parameter is the velocity (64 = normal, 127 = fastest).
-     
-    void noteOn(byte channel, byte pitch, byte velocity) {
-        MIDIEvent noteOn = {0x09, 0x90 | channel, pitch, velocity};
-        MIDIUSB.write(noteOn);
-    }
-    
-    void noteOff(byte channel, byte pitch, byte velocity) {
-        MIDIEvent noteOff = {0x08, 0x80 | channel, pitch, velocity};
-        MIDIUSB.write(noteOff);
-    }
-    
-    void loop() {
-        noteOn(0, 48, 64);   // Channel 0, middle C, normal velocity
-        MIDIUSB.flush();
-        delay(500);
-        
-        noteOff(0, 48, 64);  // Channel 0, middle C, normal velocity
-        MIDIUSB.flush();
-        delay(1500);
-    }
-   
-   
+```cpp
+// First parameter is the event type (0x09 = note on, 0x08 = note off).
+// Second parameter is note-on/note-off, combined with the channel.
+// Channel can be anything between 0-15. Typically reported to the user as 1-16.
+// Third parameter is the note number (48 = middle C).
+// Fourth parameter is the velocity (64 = normal, 127 = fastest).
+
+void noteOn(byte channel, byte pitch, byte velocity) {
+  MIDIEvent noteOn = {0x09, 0x90 | channel, pitch, velocity};
+  MIDIUSB.write(noteOn);
+}
+
+void noteOff(byte channel, byte pitch, byte velocity) {
+  MIDIEvent noteOff = {0x08, 0x80 | channel, pitch, velocity};
+  MIDIUSB.write(noteOff);
+}
+
+void loop() {
+  noteOn(0, 48, 64);   // Channel 0, middle C, normal velocity
+  MIDIUSB.flush();
+  delay(500);
+  
+  noteOff(0, 48, 64);  // Channel 0, middle C, normal velocity
+  MIDIUSB.flush();
+  delay(1500);
+}
+
+void setup() {
+
+}
+```
+
 ### Read and echo MIDI messages back to the PC
 
-    void loop() {
-        while(MIDIUSB.available() > 0) {  // Repeat while notes are available to read.
-            MIDIEvent e;
-            e = MIDIUSB.read();
-            if(e.type == 0x09 || e.type == 0x08) { // Only echo note-on and note-off
-               MIDIEvent response;
-               response.type = e.type; // Same event type (note-on/note-off)
-               response.m1 = e.m1;     // Same event type and channel
-               response.m2 = (e.m2 + 12) % 128;  // Shift by one octave
-               response.m3 = e.m3;     // Same velocity
-            }
-            MIDIUSB.write(e);
-            MIDIUSB.flush();
-        }
-    }
+```cpp
+void loop() {
+   while(MIDIUSB.available() > 0) {  // Repeat while notes are available to read.
+      MIDIEvent e;
+      e = MIDIUSB.read();
+      if(e.type == 0x09 || e.type == 0x08) { // Only echo note-on and note-off
+         MIDIEvent response;
+         response.type = e.type; // Same event type (note-on/note-off)
+         response.m1 = e.m1;     // Same event type and channel
+         response.m2 = (e.m2 + 12) % 128;  // Shift by one octave
+         response.m3 = e.m3;     // Same velocity
+      }
+      MIDIUSB.write(e);
+      MIDIUSB.flush();
+   }
+}
+
+void setup() {
+
+}
+```
 
 
 ## Supported Boards
