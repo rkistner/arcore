@@ -10,7 +10,13 @@ fi
 TARGET=$HARDWARE/arcore
 mkdir -p $HARDWARE
 if [[ -d "$TARGET" ]]; then
-  echo "Already installed at $TARGET"
+  if [[ -d "$TARGET/avr" ]]; then
+    echo "Already installed at $TARGET"
+  else
+    rm "$TARGET"
+    ln -s "$PWD/hardware" "$TARGET"
+    echo "Re-installed at $TARGET"
+  fi
 else
   ln -s "$PWD" "$TARGET"
   echo "Installed at $TARGET"

@@ -1,5 +1,7 @@
 # Arduino hardware cores
 
+## Introduction
+
 This is a fork of the core Arduino core hardware libraries.
 
 The goal is to have a simple base to customize the core libraries to add or modify core functionality, without
@@ -13,11 +15,17 @@ serve as a good base for other modifications to the cores libraries. Let me know
 Version 1.5.4 (or greater) of the Arduino IDE is required to build projects with this library.
 
 1. Clone this repository.
-2. On Linux, run `./install.sh`. The script creates a symlink in ~/Arduino/hardware to the repository. On Windows or Mac you have
-   to do this manually (you may move the repository there instead of creating a symlink).
-3. Launch the Arduino IDE (only tested on 1.5.4, will not work pre-1.5.x).
+2. On Linux, run `./install.sh`. The script creates a symlink in ~/Arduino/hardware to the hardware folder in repository. On Windows or Mac you have
+   to do this manually (you may copy the hardware folder there instead of creating a symlink).
+3. Launch the Arduino IDE (only tested on 1.5.7, will not work pre-1.5.x).
 4. Under Tools -> Board, select Arduino Leonardo (arcore).
 5. Upload your sketch as usual.
+
+
+### Update 2014-09-08
+
+The folder structure has changed. If you previously used this project, you will have
+to run `./install.sh` again.
 
 ## MIDI-USB support
 
