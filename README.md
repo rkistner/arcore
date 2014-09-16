@@ -49,6 +49,16 @@ void noteOff(byte channel, byte pitch, byte velocity) {
   MIDIUSB.write(noteOff);
 }
 
+// First parameter is the event type (0x0B = control change).
+// Second parameter is the event type, combined with the channel.
+// Third parameter is the control number number (0-119).
+// Fourth parameter is the control value (0-127).
+
+void controlChange(byte channel, byte control, byte value) {
+  MIDIEvent event = {0x0B, 0xB0 | channel, pitch, velocity};
+  MIDIUSB.write(event);
+}
+
 void loop() {
   noteOn(0, 48, 64);   // Channel 0, middle C, normal velocity
   MIDIUSB.flush();
@@ -57,6 +67,8 @@ void loop() {
   noteOff(0, 48, 64);  // Channel 0, middle C, normal velocity
   MIDIUSB.flush();
   delay(1500);
+  
+  // controlChange(0, 10, 65); // Set the value of controller 10 on channel 0 to 65
 }
 
 void setup() {
