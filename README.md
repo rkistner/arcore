@@ -110,4 +110,4 @@ Users have reported success with iPads. The main requirement here is that the de
 
 
  [1]: https://github.com/arduino/Arduino/tree/ide-1.5.x/hardware/arduino/avr/cores
- [2]: http://www.usb.org/developers/devclass_docs/midi10.pdf
+ [2]: http://www.usb.org/developers/docs/devclass_docs/midi10.pdf
