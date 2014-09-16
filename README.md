@@ -55,7 +55,7 @@ void noteOff(byte channel, byte pitch, byte velocity) {
 // Fourth parameter is the control value (0-127).
 
 void controlChange(byte channel, byte control, byte value) {
-  MIDIEvent event = {0x0B, 0xB0 | channel, pitch, velocity};
+  MIDIEvent event = {0x0B, 0xB0 | channel, control, value};
   MIDIUSB.write(event);
 }
 
