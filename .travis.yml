@@ -2,13 +2,13 @@ language: java
 jdk:
   - oraclejdk7
 env:
-  - ARDUINO_PACKAGE=arduino-1.5.4-linux64
+  - ARDUINO_PACKAGE=arduino-1.5.8-linux64
   - ARDUINO_PACKAGE=arduino-nightly-linux64
 matrix:
   allow_failures:
     - env: ARDUINO_PACKAGE=arduino-nightly-linux64
 before_install:
-  - wget --referer=http://arduino.cc/en/main/software http://downloads.arduino.cc/$ARDUINO_PACKAGE.tgz
+  - wget -O $ARDUINO_PACKAGE.tgz http://arduino.cc/download.php?f=/$ARDUINO_PACKAGE.tgz
   - tar xzf $ARDUINO_PACKAGE.tgz
   - rm $ARDUINO_PACKAGE.tgz
   - mv arduino-* $ARDUINO_PACKAGE
