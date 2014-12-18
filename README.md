@@ -22,7 +22,7 @@ Version 1.5.4 (or greater) of the Arduino IDE is required to build projects with
 5. Upload your sketch as usual.
 
 
-### Update 2014-09-08
+### Update 2014-12-18
 
 The folder structure has changed. If you previously used this project, you will have
 to run `./install.sh` again.
