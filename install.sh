@@ -18,7 +18,7 @@ if [[ -d "$TARGET" ]]; then
     echo "Re-installed at $TARGET"
   fi
 else
-  ln -s "$PWD" "$TARGET"
+  ln -s "$PWD/hardware" "$TARGET"
   echo "Installed at $TARGET"
 fi
 
