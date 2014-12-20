@@ -5,9 +5,14 @@ menu.cpu=Processor
 ##############################################################
 
 leonardo.name=Arduino Leonardo (arcore)
+leonardo.vid.0=0x2341
+leonardo.pid.0=0x0036
+leonardo.vid.1=0x2341
+leonardo.pid.1=0x8036
 leonardo.upload.tool=avrdude
 leonardo.upload.protocol=avr109
 leonardo.upload.maximum_size=28672
+leonardo.upload.maximum_data_size=2560
 leonardo.upload.speed=57600
 leonardo.upload.disable_flushing=true
 leonardo.upload.use_1200bps_touch=true
