@@ -25,5 +25,6 @@ for board in "arcore:avr:leonardo" "arcore:avr:leonardo2" "arcore:avr:micro"
 do
   example "Empty" $board
   example "MidiEcho" $board
+  example "CompileTest" $board
 done
 
