@@ -3,6 +3,8 @@ jdk:
   - oraclejdk7
 env:
   - ARDUINO_PACKAGE=arduino-1.5.8-linux64
+  - ARDUINO_PACKAGE=arduino-1.5.7-linux64
+  - ARDUINO_PACKAGE=arduino-1.5.4-linux64
   - ARDUINO_PACKAGE=arduino-nightly-linux64
 matrix:
   allow_failures:
