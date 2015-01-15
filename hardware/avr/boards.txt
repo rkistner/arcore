@@ -5,9 +5,14 @@ menu.cpu=Processor
 ##############################################################
 
 leonardo.name=Arduino Leonardo (arcore)
+leonardo.vid.0=0x2341
+leonardo.pid.0=0x0036
+leonardo.vid.1=0x2341
+leonardo.pid.1=0x8036
 leonardo.upload.tool=avrdude
 leonardo.upload.protocol=avr109
 leonardo.upload.maximum_size=28672
+leonardo.upload.maximum_data_size=2560
 leonardo.upload.speed=57600
 leonardo.upload.disable_flushing=true
 leonardo.upload.use_1200bps_touch=true
@@ -124,5 +129,42 @@ baretouch.build.variant=arduino:leonardo
 baretouch.build.extra_flags=-DUSB_VID={build.vid} -DUSB_PID={build.pid} -DIPAD_COMPAT
 
 baretouch.variant=arduino:standard
+
+##############################################################
+
+bhoreal.name=Bhoreal Slim (arcore, iPad compatible)
+bhoreal.vid.0=0x2341
+bhoreal.pid.0=0x0036
+bhoreal.vid.1=0x1d50
+bhoreal.pid.1=0x60bd
+bhoreal.upload.tool=arduino:avrdude
+bhoreal.upload.protocol=avr109
+bhoreal.upload.maximum_size=28672
+bhoreal.upload.maximum_data_size=2560
+bhoreal.upload.speed=57600
+bhoreal.upload.disable_flushing=true
+bhoreal.upload.use_1200bps_touch=true
+bhoreal.upload.wait_for_upload_port=true
+
+bhoreal.bootloader.tool=arduino:avrdude
+bhoreal.bootloader.low_fuses=0xff
+bhoreal.bootloader.high_fuses=0xd8
+bhoreal.bootloader.extended_fuses=0xcb
+bhoreal.bootloader.file=caterina/Caterina-Leonardo.hex
+bhoreal.bootloader.unlock_bits=0x3F
+bhoreal.bootloader.lock_bits=0x2F
+
+bhoreal.build.mcu=atmega32u4
+bhoreal.build.f_cpu=16000000L
+bhoreal.build.vid=0x1d50
+bhoreal.build.pid=0x60bd
+bhoreal.build.usb_product="Bhoreal Slim"
+bhoreal.build.usb_manufacturer="Bhoreal"
+bhoreal.build.board=AVR_BHOREAL
+bhoreal.build.core=arcore
+bhoreal.build.variant=arduino:leonardo
+bhoreal.build.extra_flags= {build.usb_flags} -DIPAD_COMPAT
+
+bhoreal.variant=arduino:standard
 
 ##############################################################
